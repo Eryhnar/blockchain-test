@@ -105,6 +105,8 @@ extern "C" fn handle() {
         }
         TmgAction::Age => {
             let age = exec::block_timestamp() - tmg.date_of_birth;
+            msg::reply(TmgReply::Age(age), 0).expect("Error in a reply `TmgEvent::Age`")
+                .expect("Error in a reply `TmgEvent::Age`");
             // ⚠️ TODO: Send a reply about the Tamagotchi age
             // Hint: the message payload must be TmgReply::Age(age)
         }
@@ -118,7 +120,8 @@ extern "C" fn handle() {
 #[no_mangle]
 unsafe extern "C" fn init() {
     // ⚠️ TODO: Change the tamagotchi name
-     let name = String::from("Best-Tamagotchi");
+    //  let name = String::from("Best-Tamagotchi");
+    let name: String msg::load().expect("Unable to decode `Name`")
 
     let current_block = exec::block_timestamp();
 
